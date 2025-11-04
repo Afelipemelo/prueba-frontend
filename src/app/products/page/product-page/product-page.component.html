@@ -1,0 +1,71 @@
+@if( productResource.isLoading() ) {
+<div class="flex justify-center items-center h-screen">
+  <span class="loading loading-spinner loading-lg"></span>
+</div>
+}
+
+@if( productResource.hasValue() ) {
+
+<h1 class="text-3xl font-bold font-montserrat text-center mb-10 text-primary">Detalle del Producto</h1>
+
+
+@if( productResource.hasValue() && productResource.value().data) {
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-5 max-w-5xl mx-auto bg-base-300  shadow-2xl rounded-lg ">
+
+  <div class="flex flex-col items-center justify-center">
+    <img [src]="placeholderImageUrl" [alt]="productResource.value().data.attributes.productName"
+      class="w-full max-h-96 object-cover rounded-lg shadow-xl border-4 border-base-300" />
+  </div>
+
+  <div class="space-y-6 p-4">
+
+    <div class="border-b pb-3">
+      <h2 class="text-4xl font-extrabold font-montserrat text-secondary">
+        {{ productResource.value().data.attributes.productName }}
+      </h2>
+      <p class="text-4xl font-bold text-accent mt-2">
+        ${{ productResource.value().data.attributes.productPrice | number : '1.2-2' }}
+      </p>
+    </div>
+
+    <div class="flex items-center space-x-4 text-lg">
+      <span class="font-semibold text-neutral">Categoría:</span>
+      <span class="badge badge-lg badge-info text-white capitalize">
+        {{ productResource.value().data.attributes.productCategory.toLowerCase() }}
+      </span>
+      <span class="text-sm text-gray-500">
+        (ID: {{ productResource.value().data.id }})
+      </span>
+    </div>
+
+    <div class="pt-4">
+      <h3 class="text-xl font-semibold mb-2 text-neutral">Inventario:</h3>
+      <p class="text-gray-600 leading-relaxed whitespace-pre-line">
+        {{ productResource.value().data.attributes.productDescription }}
+      </p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="flex gap-4">
+      <button class="btn btn-primary btn-lg flex-1" onclick="inventory_modal.showModal()">
+        <i class="fas fa-shopping-cart mr-2"></i> Invetario
+      </button>
+      <button class="btn btn-outline btn-lg" (click)="goBack()">
+        volver
+      </button>
+    </div>
+
+  </div>
+</div>
+
+} @else {
+<div class="text-center p-20">
+  <p class="text-xl text-gray-500">Cargando detalles del producto o producto no encontrado...</p>
+</div>
+}
+
+<product-details [product]="productResource.value()!.data.attributes"></product-details>
+}
+<modal-inventory [productId]="productSlug$" />

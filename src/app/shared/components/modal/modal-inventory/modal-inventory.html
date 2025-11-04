@@ -1,0 +1,65 @@
+<dialog id="inventory_modal" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box p-6 bg-white dark:bg-gray-800 shadow-xl rounded-lg">
+    <div class="flex justify-between items-center border-b pb-3 mb-4">
+      <h3 class="font-bold text-2xl text-primary dark:text-secondary">Gestión de Inventario</h3>
+      <button class="btn btn-sm btn-circle btn-ghost" (click)="closeModal()">✕</button>
+    </div>
+    @if (inventoryStock() !== null) {
+    <div class="space-y-6">
+      <p class="text-sm text-gray-500">
+        ID de Producto: <span class="font-semibold text-neutral">{{ productId() }}</span>
+      </p>
+      <div class="flex justify-around items-center bg-base-100 p-4 rounded-lg border">
+        <div class="text-center">
+          <span class="text-xs font-semibold text-gray-500 block">Stock actual</span>
+          <span class="text-3xl font-bold text-neutral">
+            {{ inventoryStock()!.data.attributes.stock }}
+          </span>
+        </div>
+        <i class="fas fa-arrow-right text-accent text-2xl"></i>
+        <div class="text-center">
+          <span class="text-xs font-semibold text-gray-500 block">Modificar stock</span>
+          <span class="text-5xl font-extrabold"
+            [class.text-warning]="tempStock() !== inventoryStock()!.data.attributes.stock"
+            [class.text-accent]="tempStock() === inventoryStock()!.data.attributes.stock">
+            {{ tempStock() }}
+          </span>
+        </div>
+      </div>
+      <div class="pt-4 border-t">
+        <h4 class="text-lg font-semibold mb-3 text-neutral">Modificar Stock (+/- 1)</h4>
+        <div class="flex space-x-3">
+          <button (click)="subtractStock()" class="btn btn-error w-1/2 text-white">
+            <i class="fas fa-minus-circle mr-2"></i> Restar (-1)
+          </button>
+          <button (click)="addStock()" class="btn btn-success w-1/2 text-white">
+            <i class="fas fa-plus-circle mr-2"></i> Sumar (+1)
+          </button>
+        </div>
+      </div>
+      <div class="modal-action justify-center p-0 pt-4">
+        <button (click)="saveInventory()" [disabled]="tempStock() === inventoryStock()!.data.attributes.stock"
+          class="btn btn-primary w-full btn-lg shadow-xl">
+          <i class="fas fa-save mr-2"></i> Guardar Inventario
+        </button>
+      </div>
+    </div>
+    } @else {
+    <p class="text-center py-8 text-gray-500">Cargando datos de inventario...</p>
+    }
+    <div class="modal-action mt-6 pt-4 border-t">
+      <button class="btn btn-md" (click)="closeModal()">Cerrar</button>
+    </div>
+  </div>
+</dialog>
+@if (saveSuccess()) {
+<div class="fixed bottom-4 right-4 z-50 transition-opacity duration-500 ease-in-out">
+  <div role="alert" class="alert alert-success shadow-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span>Stock Actualizado Correctamente!</span>
+  </div>
+</div>
+}

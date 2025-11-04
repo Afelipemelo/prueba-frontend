@@ -1,59 +1,50 @@
-# PruebaFrontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.
+# 💻 [Nombre de tu Aplicación] - Frontend Angular
 
-## Development server
+Este es el repositorio del cliente (Frontend) de la aplicación de gestión de inventario, desarrollada con **Angular ^19.2.7** y **Tailwind CSS/DaisyUI**.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## 🎯 Propósito del Proyecto (Prueba Técnica)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Este proyecto fue desarrollado como parte de una **prueba técnica** y tiene como objetivo demostrar el manejo completo de datos (`CRUD`) en el lado del cliente (Angular) consumiendo una API externa (backend de Spring Boot/Java).
 
-## Code scaffolding
+### Características Implementadas:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Funcionalidad | Descripción |
+| :--- | :--- |
+| **Mostrar Todos los Productos** | Muestra un listado paginado de todos los productos disponibles. |
+| **Mostrar Producto por ID** | Permite ver los detalles individuales de cualquier producto. |
+| **Crear Producto** | Abre un modal para registrar nuevos productos en el sistema. |
+| **Actualizar Producto** | Permite modificar los datos principales (nombre, precio, descripción) de un producto existente. |
+| **Actualizar Inventario** | Habilidad para modificar el stock de un producto específico. |
+| **Eliminar Producto** | Funcionalidad para retirar un producto del sistema. |
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🚀 Puesta en Marcha
 
-```bash
-ng generate --help
-```
+Sigue estos pasos para instalar y ejecutar el proyecto en tu máquina local.
 
-## Building
+### 1. Requisitos Previos
 
-To build the project run:
+Antes de empezar, asegúrate de tener instalado:
 
-```bash
-ng build
-```
+* **Node.js** (v18.x o superior)
+* **npm** (incluido con Node.js)
+* **Angular CLI** (opcional, pero recomendado)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+> ⚠️ **Backend Requerido:** Esta aplicación requiere que el **servicio de backend** de Spring Boot/Java esté corriendo en `http://localhost:8080/api/v1` para poder cargar y manipular los datos mas infomracion **https://github.com/Afelipemelo/backend-prueba**.
 
-## Running unit tests
+### 2. Instalación de Dependencias
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Clona este repositorio y navega al directorio del proyecto. Luego, instala las dependencias de Node:
 
 ```bash
-ng e2e
-```
+# 1. Clona el repositorio
+git clone [https://github.com/Afelipemelo/prueba-frontend.git]
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+# 2. Instala todas las dependencias de Node
+npm install
+# 2. Iniciar el proyecto 
+npm start

@@ -1,0 +1,16 @@
+<div class="card card-compact bg-base-100 shadow-xl  animate-fadeIn">
+  <figure>
+    <img
+      [src]="placeholderImageUrl"
+      [alt]="product().productName" />
+  </figure>
+  <div class="card-body bg-base-300 min-h-40">
+    <h2 class="card-title font-montserrat text-accent text-lg hover:underline cursor-pointer" [routerLink]="['/product', product().productId]">{{product().productName}}</h2>
+
+    <p class="overflow-hidden">{{product().productDescription | slice : 0 : 70}}</p>
+
+    <div class="card-actions justify-end">
+      <a class="link link-accent" [routerLink]="['/product', product().productId]"> Mas informacion</a>
+    </div>
+  </div>
+</div>

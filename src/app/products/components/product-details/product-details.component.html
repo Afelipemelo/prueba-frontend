@@ -1,0 +1,98 @@
+<div class="p-4 sm:p-8 bg-base-100 rounded-lg shadow-2xl">
+
+  <h2 class="text-3xl font-extrabold text-neutral mb-6 border-b pb-3">
+    Edición de Producto
+  </h2>
+
+  @if (wasSave()) {
+  <div role="alert" class="alert alert-success mb-6">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span>¡Producto actualizado correctamente!</span>
+  </div>
+  }
+
+  @if (product()) {
+  <p class="text-sm text-gray-500 mb-4">
+    ID del Producto: <span class="font-semibold text-primary">{{ product().productId}}</span>
+  </p>
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="space-y-6">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text font-medium">Nombre del Producto *</span>
+        </div>
+        <input type="text" formControlName="productName" placeholder="Ej: Laptop Gamer X"
+          class="input input-bordered w-full" />
+        @if (productForm.get('productName')?.invalid && productForm.get('productName')?.touched) {
+        <div class="label">
+          <span class="label-text-alt text-error">El nombre es obligatorio.</span>
+        </div>
+        }
+      </label>
+
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text font-medium">Categoría *</span>
+        </div>
+        <input type="text" formControlName="productCategory" placeholder="Ej: ELECTRONICS_TECHNOLOGY"
+          class="input input-bordered w-full" />
+        @if (productForm.get('productCategory')?.invalid && productForm.get('productCategory')?.touched) {
+        <div class="label">
+          <span class="label-text-alt text-error">Categoría inválida o vacía.</span>
+        </div>
+        }
+      </label>
+    </div>
+
+    <label class="form-control w-full">
+      <div class="label">
+        <span class="label-text font-medium">Descripción</span>
+      </div>
+      <textarea formControlName="productDescription" rows="4" placeholder="Breve descripción del producto..."
+        class="textarea textarea-bordered w-full"></textarea>
+    </label>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text font-medium">Precio *</span>
+        </div>
+        <input type="number" formControlName="productPrice" placeholder="0.00" min="0.01"
+          class="input input-bordered w-full" />
+        @if (productForm.get('productPrice')?.invalid && productForm.get('productPrice')?.touched) {
+        <div class="label">
+          <span class="label-text-alt text-error">El precio es obligatorio y debe ser positivo.</span>
+        </div>
+        }
+      </label>
+
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text font-medium">URL de la Imagen Principal</span>
+        </div>
+        <input type="url" formControlName="productImages" placeholder="https://ejemplo.com/imagen.jpg"
+          class="input input-bordered w-full" />
+      </label>
+    </div>
+
+    <div class="pt-6 border-t mt-8">
+      <button type="submit" [disabled]="productForm.invalid || !productForm.dirty"
+        class="btn btn-primary w-full btn-lg shadow-xl transition-all duration-300">
+        <i class="fas fa-save mr-2"></i> Actualizar Producto
+      </button>
+    </div>
+
+  </form>
+  } @else {
+  <div class="text-center py-10">
+    <span class="loading loading-spinner loading-lg text-primary"></span>
+    <p class="text-gray-500 mt-3">Cargando datos del producto...</p>
+  </div>
+  }
+
+</div>
