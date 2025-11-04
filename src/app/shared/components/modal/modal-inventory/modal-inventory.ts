@@ -18,46 +18,38 @@ export class ModalInventory {
 
   tempStock = signal<number>(0);
 
-  loadInventory(): void {
+  ngOnInit(): void {
+    this.loadInventory();
+  }
+
+loadInventory(): void {
     this.inventoryService.getInventory(this.productId())
       .subscribe({
         next: (response) => {
           this.inventoryStock.set(response);
+          this.tempStock.set(0);
         },
         error: (err) => {
           console.error("Error cargando inventario:", err);
-          const defaultStock = 0;
-
-          const defaultResponse: InventoryResponse = {
-            data: {
-              type: 'inventories',
-              id: this.productId(),
-              attributes: {
-                stock: defaultStock,
-                stockChange: null,
-              }
-            }
-          };
-          this.inventoryStock.set(defaultResponse);
-          this.tempStock.set(defaultStock);
+          this.tempStock.set(0);
         }
       });
   }
 
-  addStock(): void {
-    this.tempStock.update(current => current + 1);
-  }
+  onStockChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const value = parseInt(inputElement.value, 10);
 
-  subtractStock(): void {
-    if (this.inventoryStock()?.data.attributes.stock != 0) {
-      this.tempStock.update(current => current - 1);
-    }
+    this.tempStock.set(isNaN(value) ? 0 : value);
   }
 
   saveInventory(): void {
-    const newStock = this.tempStock();
-    this.tempStock.set(0)
-    this.inventoryService.updateInventory(this.productId(), newStock)
+    const stockChange = this.tempStock();
+
+    if (stockChange === 0) return;
+    this.tempStock.set(0);
+
+    this.inventoryService.updateInventory(this.productId(), stockChange)
       .subscribe({
         next: (response) => {
           this.inventoryStock.set(response);
@@ -67,14 +59,15 @@ export class ModalInventory {
             this.saveSuccess.set(false);
           }, 3000);
         },
-        error: (err) => console.error("Error al guardar inventario:", err)
+        error: (err) => {
+          console.error("Error al guardar inventario:", err);
+          this.tempStock.set(stockChange);
+        }
       });
   }
 
-  closeModal(): void {
+closeModal(): void {
     (document.getElementById('inventory_modal') as HTMLDialogElement).close();
-  }
-  ngOnInit(): void {
-    this.loadInventory();
+    this.tempStock.set(0);
   }
 }
