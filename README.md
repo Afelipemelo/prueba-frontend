@@ -1,5 +1,5 @@
 
-# 💻 [Nombre de tu Aplicación] - Frontend Angular
+# 💻 Prueba - Frontend Angular
 
 Este es el repositorio del cliente (Frontend) de la aplicación de gestión de inventario, desarrollada con **Angular ^19.2.7** y **Tailwind CSS/DaisyUI**.
 
